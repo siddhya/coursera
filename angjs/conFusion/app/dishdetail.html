@@ -41,8 +41,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-9 col-xs-offset-1">
-                <p>Put the comments here</p>
+            <div class="col-xs-9 col-xs-offset-1" ng-controller="dishDetailController">
+                <ul class="comment-list">
+                    <li class="comments" ng-repeat="comment in dish.comments">
+                        <blockquote>
+                            <p>{{comment.comment}}</p>
+                            <footer>{{comment.author}} {{comment.date | date}}</footer>
+                        </blockquote>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
