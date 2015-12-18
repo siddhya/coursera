@@ -158,7 +158,7 @@ angular.module('confusionApp', [])
             $scope.newcomment = {name: "", rating: 5, comment: ""};
             
             $scope.submitComment = function () {
-                
+              console.log($scope.newcomment);
                 //Step 2: This is how you record the date
                 //"The date property of your JavaScript object holding the comment" = new Date().toISOString();
                 
