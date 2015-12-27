@@ -1,6 +1,9 @@
 <div class="container">
     <div class="row row-content" ng-controller="DishDetailController">
         <div class="col-xs-12">
+            <button class="btn btn-xs btn-primary pull-right" type="button" ui-sref="app.menu">
+                Back to Menu
+            </button>
             <div class="media ">
                 <div class="media-left media-middle ">
                     <a href="#%20">
@@ -16,6 +19,7 @@
             </div>
         </div>
         <div class="col-xs-9 col-xs-offset-1">
+            <h2>Comments</h2>
             <label for="order">Sorting Order</label>
             <input class="form-control" ng-model="ordervar" id="order" type="text">
             <ul class="comment-list">
@@ -29,6 +33,7 @@
             </ul>
         </div>
         <div class="col-xs-9 col-xs-offset-1" ng-controller="DishCommentController">
+            <h2>Your Comment</h2>
             <ul class="comment-list" ng-show="commentForm.$valid && !commentForm.$pristine">
                 <li class="comments">
                     <blockquote>

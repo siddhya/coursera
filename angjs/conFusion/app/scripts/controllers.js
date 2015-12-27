@@ -92,7 +92,7 @@ angular.module('confusionApp')
 
 .controller('DishCommentController', ['$scope', function($scope) {
 
-    $scope.mycomment = {
+    $scope.newcomment = {
         rating: 5,
         comment: "",
         author: "",
@@ -101,14 +101,13 @@ angular.module('confusionApp')
 
     $scope.submitComment = function() {
 
-        $scope.mycomment.date = new Date().toISOString();
-        console.log($scope.mycomment);
-
-        $scope.dish.comments.push($scope.mycomment);
+        $scope.newcomment.date = new Date().toISOString();
+        
+        $scope.dish.comments.push($scope.newcomment);
 
         $scope.commentForm.$setPristine();
 
-        $scope.mycomment = {
+        $scope.newcomment = {
             rating: 5,
             comment: "",
             author: "",
@@ -118,9 +117,9 @@ angular.module('confusionApp')
 }])
 
 // implement the IndexController and About Controller here
-.controller('IndexController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+.controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
 
-    var promotion = getPromotion(0);
+    var promotion = menuFactory.getPromotion(0);
 
     $scope.promotionDish = promotion;
 
@@ -128,13 +127,17 @@ angular.module('confusionApp')
 
     $scope.featuredDish = dish;
 
+    var leader = corporateFactory.getLeader(3);
+
+    $scope.leader = leader;
+
 }])
 
-.controller('AboutController', ['$scope', '$stateParams', 'corporateFactory', function($scope, $stateParams, corporateFactory) {
+.controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
 
-     var leaders = corporateFactory.getLeaders();
+    var leaders = corporateFactory.getLeaders();
 
-         $scope.leaders = leaders;
+    $scope.leaders = leaders;
 
 }])
 
