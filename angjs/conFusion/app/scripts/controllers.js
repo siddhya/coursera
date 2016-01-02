@@ -121,9 +121,9 @@ angular.module('confusionApp')
 // implement the IndexController and About Controller here
 .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
 
-    var promotion = menuFactory.getPromotion(0);
-
-    $scope.promotionDish = promotion;
+    $scope.promotionDish = menuFactory.getPromotion().get({
+        id: 0
+    });
 
     $scope.showDish = true;
     $scope.message = "Loading ...";
