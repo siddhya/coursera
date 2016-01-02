@@ -166,19 +166,35 @@ angular.module('confusionApp')
                 $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
-    var leader = corporateFactory.getLeader(3);
 
-    $scope.leader = leader;
-
+    $scope.showLeader = false;
+    $scope.leaderMessage = "Loading ...";
+    $scope.leader = corporateFactory.getLeaders().get({
+            id: 3
+        })
+        .$promise.then(
+            function(response) {
+                $scope.leader = response;
+                $scope.showLeader = true;
+            },
+            function(response) {
+                $scope.leaderMessage = "Error: " + response.status + " " + response.statusText;
+            }
+        );
 }])
 
 .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
 
-    var leaders = corporateFactory.getLeaders();
+    $scope.showLeaders = false;
+    $scope.leadersMessage = "Loading ...";
 
-    $scope.leaders = leaders;
-
-}])
-
-
-;
+    $scope.leaders = corporateFactory.getLeaders().query(
+        function(response) {
+            $scope.leaders = response;
+            $scope.showLeaders = true;
+        },
+        function(response) {
+            $scope.leadersMessage = "Error: " + response.status + " " + response.statusText;
+            console.log($scope.leadersMessage);
+        });
+}]);
