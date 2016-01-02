@@ -65,7 +65,18 @@ angular.module('confusionApp')
 
 }])
 
-.controller('FeedbackController', ['$scope', function($scope) {
+.controller('FeedbackController', ['$scope', 'feedbackFactory', function($scope, feedbackFactory) {
+
+    $scope.feedback = {
+        mychannel: "Email",
+        firstName: "",
+        lastName: "",
+        agree: false,
+        email: "",
+        aCode: "",
+        telNum: "",
+        feedback: ""
+    };
 
     $scope.sendFeedback = function() {
 
@@ -75,17 +86,22 @@ angular.module('confusionApp')
             $scope.invalidChannelSelection = true;
             console.log('incorrect');
         } else {
+
+            feedbackFactory.getfeedback().save($scope.feedback);
+
             $scope.invalidChannelSelection = false;
             $scope.feedback = {
                 mychannel: "",
                 firstName: "",
                 lastName: "",
                 agree: false,
-                email: ""
+                email: "",
+                aCode: "",
+                telNum: "",
+                feedback: ""
             };
             $scope.feedback.mychannel = "";
             $scope.feedbackForm.$setPristine();
-            console.log($scope.feedback);
         }
     };
 }])
@@ -108,7 +124,7 @@ angular.module('confusionApp')
         );
 }])
 
-.controller('DishCommentController', ['$scope', function($scope) {
+.controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
     $scope.newcomment = {
         rating: 5,
@@ -122,6 +138,9 @@ angular.module('confusionApp')
         $scope.newcomment.date = new Date().toISOString();
 
         $scope.dish.comments.push($scope.newcomment);
+        menuFactory.getDishes().update({
+            id: $scope.dish.id
+        }, $scope.dish);
 
         $scope.commentForm.$setPristine();
 
