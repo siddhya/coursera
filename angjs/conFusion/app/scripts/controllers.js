@@ -7,9 +7,10 @@ angular.module('confusionApp')
     $scope.tab = 1;
     $scope.filtText = '';
     $scope.showDetails = false;
+    $scope.showMenu = true;
+    $scope.message = "Loading ...";
 
-    $scope.dishes = menuFactory.getDishes();
-
+    $scope.dishes = menuFactory.getDishes().query();
 
     $scope.select = function(setTab) {
         $scope.tab = setTab;
@@ -63,7 +64,7 @@ angular.module('confusionApp')
 
         console.log($scope.feedback);
 
-        if ($scope.feedback.agree && ($scope.feedback.mychannel == "")) {
+        if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
             $scope.invalidChannelSelection = true;
             console.log('incorrect');
         } else {
@@ -84,10 +85,11 @@ angular.module('confusionApp')
 
 .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
-    var dish = menuFactory.getDish(parseInt($stateParams.id, 10));
-
-    $scope.dish = dish;
-
+    $scope.showDish = true;
+    $scope.message = "Loading ...";
+    $scope.dish = menuFactory.getDishes().get({
+        id: parseInt($stateParams.id, 10)
+    });
 }])
 
 .controller('DishCommentController', ['$scope', function($scope) {
@@ -113,7 +115,7 @@ angular.module('confusionApp')
             author: "",
             date: ""
         };
-    }
+    };
 }])
 
 // implement the IndexController and About Controller here
@@ -123,9 +125,11 @@ angular.module('confusionApp')
 
     $scope.promotionDish = promotion;
 
-    var dish = menuFactory.getDish(0);
-
-    $scope.featuredDish = dish;
+    $scope.showDish = true;
+    $scope.message = "Loading ...";
+    $scope.featuredDish = menuFactory.getDishes().get({
+        id: 0
+    });
 
     var leader = corporateFactory.getLeader(3);
 
